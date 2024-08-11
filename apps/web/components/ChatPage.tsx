@@ -1,14 +1,23 @@
-import { Session } from 'next-auth/react';
+import SendMessageButton from './SendMessageButton';
 
-interface ChatPageProps {
-  session: Session;
-}
-
-const ChatPage: React.FC<ChatPageProps> = ({ session }) => {
+const ChatPage: React.FC = () => {
   return (
-    <div>
-      <div>Welcome to the next-chat {session.user?.name}</div>
-      <div>Chat Page</div>
+    <div className='flex flex-col h-screen'>
+      <div className='text-center'>
+        <div>Welcome to the next-chat</div>
+        <div>Chat Page</div>
+      </div>
+
+      <div id='write-and-send-div' className=' bg-slate-200 h-full p-2'>
+        <div>
+          <input
+            type='text'
+            name='chat-input'
+            className='rounded-md bg-slate-300 p-2 bottom-2'
+          />
+          <SendMessageButton />
+        </div>
+      </div>
     </div>
   );
 };
