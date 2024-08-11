@@ -4,14 +4,14 @@ import { redirect } from 'next/navigation';
 import ChatPage from '../../components/ChatPage';
 
 const Home: React.FC = () => {
-  const { data: session, status } = useSession();
+  //   const { data: session, status } = useSession();
 
-  if (status === 'unauthenticated') {
-    redirect('/');
-    return null;
-  } else if (status == 'loading') {
-    return <>Loading ...</>;
-  }
+  //   if (status === 'unauthenticated') {
+  //     redirect('/');
+  //     return null;
+  //   } else if (status == 'loading') {
+  //     return <>Loading ...</>;
+  //   }
 
   return <ChatPage />;
 };
