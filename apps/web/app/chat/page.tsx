@@ -1,10 +1,10 @@
 'use client';
-import { useSession, Session } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import ChatPage from '../../components/ChatPage';
 
 const Home: React.FC = () => {
-  const { data: session, status } = useSession<Session>(); // Explicitly typing session as a `Session`
+  const { data: session, status } = useSession();
 
   if (status === 'unauthenticated') {
     redirect('/');
