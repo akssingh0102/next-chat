@@ -1,5 +1,5 @@
 // prisma/seed.ts
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -9,23 +9,23 @@ async function main() {
   if (userCount === 0) {
     const user1 = await prisma.user.create({
       data: {
-        name: 'admin',
-        email: 'admin',
-        password: 'admin',
+        name: "admin",
+        email: "admin",
+        password: "admin",
       },
     });
 
     const user2 = await prisma.user.create({
       data: {
-        name: 'Bob',
-        email: 'bob@example.com',
-        password: 'password123',
+        name: "Bob",
+        email: "bob@example.com",
+        password: "password123",
       },
     });
 
-    console.log('🌳 Seed data created:', { user1, user2 });
+    console.log("🌳 Seed data created:", { user1, user2 });
   } else {
-    console.log('🌳 Seed data already exists, skipping...');
+    console.log("🌳 Seed data already exists, skipping...");
   }
 }
 

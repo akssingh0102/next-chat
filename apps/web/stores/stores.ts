@@ -1,6 +1,6 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const sendMessageTextState = atom({
-  key: 'sendMessageTextState',
-  default: '',
+  key: "sendMessageTextState",
+  default: "",
 });
