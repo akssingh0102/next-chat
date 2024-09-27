@@ -1,34 +1,32 @@
 import express from 'express';
-import { createServer } from 'http';
-import { Server as SocketIOServer } from 'socket.io';
-import cors from 'cors';
+import next from 'next';
+import http from 'http';
+import socketIO from 'socket.io';
 
-const app = express();
-const httpServer = createServer(app);
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-const io = new SocketIOServer(httpServer, {
-  cors: {
-    origin: 'http://localhost:3000', // Allow requests from your Next.js app
-    methods: ['GET', 'POST'],
-  },
-});
+app.prepare().then(async () => {
+  const server = express();
+  const httpServer = http.createServer(server);
+  const io = new socketIO.Server(httpServer);
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+  io.on('connection', (socket) => {
+    console.log('Client connected');
 
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  socket.on('message', (msg) => {
-    console.log(`Message received: ${msg}`);
-    // socket.emit('message', msg);
-    socket.broadcast.emit('message', msg);
+    socket.on('message1', (data) => {
+      console.log('Received from API ::', data);
+      io.emit('message2', data);
+    });
   });
 
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
+  server.all('*', (req, res) => {
+    return handle(req, res);
   });
-});
 
-httpServer.listen(4000, () => {
-  console.log('Socket.IO server is running on http://localhost:4000');
+  const PORT = process.env.PORT || 4000;
+  httpServer.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
 });
